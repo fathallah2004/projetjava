@@ -1,0 +1,39 @@
+//////////////class interface standard
+package Pack ; 
+
+import java.awt.event.*;
+import javax.swing.*;
+public class UserSignup extends JFrame implements ActionListener {
+
+    public UserSignup() {
+        super("user sign up") ;
+        setSize(500,250);
+        setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setResizable(false);
+
+        
+        
+
+
+
+
+
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        
+    }
+}
+
+/////////////// classs mainnnnn
+
+import Pack.UserSignup ;
+
+public class Main {
+    public static void main(String[] args) {
+     //   App app = new App();
+        UserSignup a1 =new UserSignup() ;
+    //   app.run();
+    }
+}
