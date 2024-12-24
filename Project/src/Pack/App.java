@@ -28,7 +28,7 @@ public class App extends JFrame implements ActionListener {
             System.out.println("admin");
         }
         else if(e.getSource()==userb){
-            LoginUser userUI = new LoginUser() ;
+            new LoginUser() ;
         }
         dispose();
     }

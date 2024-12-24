@@ -1,9 +1,11 @@
 package Pack;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class UserSignup extends JFrame {
+public class UserSignup extends JFrame implements ActionListener {
     JLabel name = new JLabel("Name");
     JLabel surname = new JLabel("Surname");
     JLabel nationality = new JLabel("Nationality");
@@ -29,8 +31,8 @@ public class UserSignup extends JFrame {
     JRadioButton maleRadio = new JRadioButton("Male");
     JRadioButton femaleRadio = new JRadioButton("Female");
     ButtonGroup genderGroup = new ButtonGroup();
-    JButton signup = new JButton("signup");
-    JButton goback = new JButton("goback");
+    JButton signupb = new JButton("signup");
+    JButton gobackb = new JButton("goback");
 
 
 
@@ -134,21 +136,50 @@ public class UserSignup extends JFrame {
         femaleRadio.setFont(new Font("Arial", Font.PLAIN, 14));
         genderGroup.add(femaleRadio);
         add(femaleRadio);
+        signupb.setBounds(320, 560, 100, 30);
+        gobackb.setBounds(80, 560, 100, 30);
+        robotCheckBox.addActionListener(this);
+        signupb.addActionListener(this);
+        gobackb.addActionListener(this);
 
-
-        signup.setBounds(320, 560, 100, 30);
-        goback.setBounds(80, 560, 100, 30);
-
-        add(signup);
-        add(goback);
-        
-
-
-
+        add(signupb);
+        add(gobackb);
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new UserSignup();
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==signupb){
+            String emailS = emailField.getText();
+            String pwdS = password.getText();
+            String verifyPwdS = verifyPasswordField.getText();
+            String nameS = nameField.getText();
+            String surnameS = surnameField.getText();
+            String telS = phoneField.getText();
+            if(!robotCheckBox.isSelected()){
+                JOptionPane.showMessageDialog(this, "Check the robot box please.");
+            }
+            else if(!maleRadio.isSelected() && !femaleRadio.isSelected()){
+                JOptionPane.showMessageDialog(this, "Select the gender");
+            }
+            else if (verifEmail(emailS) && verifPassword(pwdS) && pwdS.equals(verifyPwdS) && !nameS.isEmpty() && !surnameS.isEmpty() && telS.length() == 8) {
+                JOptionPane.showMessageDialog(this, "Sign up successful");
+                dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Check your informations please.");
+                robotCheckBox.setSelected(false);
+            }
+        }
+        else if(e.getSource()==gobackb){
+            new LoginUser() ;
+            dispose();
+        }
+
+    }
+    public boolean verifEmail(String email){
+        return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
+    }
+    public boolean verifPassword(String password){
+        return password.length() >= 8;
     }
 }

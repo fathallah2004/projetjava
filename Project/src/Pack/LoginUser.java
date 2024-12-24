@@ -46,24 +46,38 @@ public class LoginUser extends JFrame  implements ActionListener {
         add(loginb);
         add(signupb);
         add(gobackb);
-
-
-
         setVisible(true);
-
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==loginb){
-            System.out.println("admin");
+            System.out.println("login");
+            String emailS = emailTextField.getText();
+            String pwdS = passwordTextField.getText();
+            if((!verifEmail(emailS)) || (!verifPassword(pwdS))){
+                JOptionPane.showMessageDialog(this, "Invalid email or password");
+                emailTextField.setText("");
+                passwordTextField.setText("");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Login successful");
+                dispose();
+            }
         }
         else if(e.getSource()==signupb){
-            UserSignup UserSignup = new UserSignup() ;
+            new UserSignup() ;
+            dispose();
         }
         else if(e.getSource()==gobackb){
-            App app = new App() ;
+            new App() ;
+            dispose();
         }
-        dispose();
-    }
 
+    }
+    public boolean verifEmail(String email){
+        return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
+    }
+    public boolean verifPassword(String password){
+        return password.length() >= 8;
+    }
 
 }
