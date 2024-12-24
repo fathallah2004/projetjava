@@ -9,7 +9,6 @@ public class AdminCarUser extends JFrame{
 
     public AdminCarUser (){
         super("AdminCarUser");
-        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,300) ;
         setResizable(false);
@@ -22,11 +21,6 @@ public class AdminCarUser extends JFrame{
         add(goback);
         add(addcar);
         add(user);
-        
-       
-
-
-
         setVisible(true);
 
     }

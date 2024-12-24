@@ -1,17 +1,19 @@
 package Pack ;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*; 
-public class Login extends JFrame {
+public class LoginUser extends JFrame  implements ActionListener {
     JLabel email =new JLabel("email") ;
     JLabel password =new JLabel("Password");
     JTextField emailTextField = new JTextField();
     JPasswordField passwordTextField = new JPasswordField();
-    JButton login = new JButton("login");
-    JButton goback = new JButton("goback");
-    JButton signup = new JButton("signup");
+    JButton loginb = new JButton("login");
+    JButton gobackb = new JButton("goback");
+    JButton signupb = new JButton("signup");
     
 
-    public Login (){
+    public LoginUser(){
         super("login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,250);
@@ -35,18 +37,32 @@ public class Login extends JFrame {
         passwordTextField.setFont(new  Font("Arial", Font.BOLD, 14) );
         add(passwordTextField);
 
-        login.setBounds(280, 175, 90, 30);
-        signup.setBounds(190, 175, 80, 30);
-        goback.setBounds(10, 175, 90, 30);
-
-        add(login);
-        add(signup);
-        add(goback);
+        loginb.setBounds(280, 175, 90, 30);
+        signupb.setBounds(190, 175, 80, 30);
+        gobackb.setBounds(10, 175, 90, 30);
+        loginb.addActionListener(this);
+        signupb.addActionListener(this);
+        gobackb.addActionListener(this);
+        add(loginb);
+        add(signupb);
+        add(gobackb);
 
 
 
         setVisible(true);
 
+    }
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==loginb){
+            System.out.println("admin");
+        }
+        else if(e.getSource()==signupb){
+            UserSignup UserSignup = new UserSignup() ;
+        }
+        else if(e.getSource()==gobackb){
+            App app = new App() ;
+        }
+        dispose();
     }
 
 
