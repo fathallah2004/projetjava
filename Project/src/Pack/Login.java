@@ -6,8 +6,10 @@ public class Login extends JFrame {
     JLabel password =new JLabel("Password");
     JTextField emailTextField = new JTextField();
     JPasswordField passwordTextField = new JPasswordField();
-    JButton login = new JButton("signup");
+    JButton login = new JButton("login");
     JButton goback = new JButton("goback");
+    JButton signup = new JButton("signup");
+    
 
     public Login (){
         super("login");
@@ -34,9 +36,11 @@ public class Login extends JFrame {
         add(passwordTextField);
 
         login.setBounds(280, 175, 90, 30);
+        signup.setBounds(190, 175, 80, 30);
         goback.setBounds(10, 175, 90, 30);
 
         add(login);
+        add(signup);
         add(goback);
 
 
