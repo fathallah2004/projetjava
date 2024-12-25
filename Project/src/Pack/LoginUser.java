@@ -14,7 +14,7 @@ public class LoginUser extends JFrame  implements ActionListener {
     
 
     public LoginUser(){
-        super("login");
+        super("User Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,250);
         setResizable(false);

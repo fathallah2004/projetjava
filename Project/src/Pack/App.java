@@ -7,7 +7,7 @@ public class App extends JFrame implements ActionListener {
     JButton adminb = new JButton ("ADMIN") ;
     JButton userb = new JButton ("USER") ;
     public App(){
-        super("project");
+        super("Cars Retail");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,300) ;
         setResizable(false);
@@ -24,8 +24,7 @@ public class App extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==adminb){
-            //AdminUI adminUI = new AdminUI() ;
-            System.out.println("admin");
+            new LoginAdmin() ;
         }
         else if(e.getSource()==userb){
             new LoginUser() ;
