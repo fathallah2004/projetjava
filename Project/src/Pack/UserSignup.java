@@ -162,7 +162,8 @@ public class UserSignup extends JFrame implements ActionListener {
                     Class.forName("org.sqlite.JDBC");
                     Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
                     Statement stmt = con.createStatement();
-                    int rs=stmt.executeUpdate("INSERT INTO Users (name,surname,email,password,phone,country,sex,role) VALUES ('"+nameS+"','"+surnameS+"','"+emailS+"','"+pwdS+"','"+telS+"','Tunisia','"+g+"','Client')");
+                    int rs=stmt.executeUpdate("INSERT INTO Users (name,surname,email,password,phone,country,sex,role) " +
+                                                "VALUES ('"+nameS+"','"+surnameS+"','"+emailS+"','"+pwdS+"','"+telS+"','Tunisia','"+g+"','Client')");
                 } catch (SQLException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }

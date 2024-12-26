@@ -13,7 +13,7 @@ public class addCar extends JFrame implements ActionListener{
     JLabel marque = new JLabel("Marque");
     JLabel model = new JLabel("Model");
     JLabel prix = new JLabel("Prix");
-    JLabel etat = new JLabel("etat");
+    JLabel etat = new JLabel("Etat");
     JLabel couleur = new JLabel("Couleur");
     JLabel matricule = new JLabel("Matricule");
     JLabel tunis = new JLabel("تونس");
@@ -25,16 +25,8 @@ public class addCar extends JFrame implements ActionListener{
     JTextField couleurField = new JTextField(20);
     JTextField matriculeField1 = new JTextField(20);
     JTextField matriculeField2 = new JTextField(20);
-    
-    
-    
-    
-    
-   
     JButton addcar = new JButton("Add Car");
     JButton goback = new JButton("goback");
-
-
 
     public addCar() {
         super("add Car");
