@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.sql.*;
+
 public class LoginAdmin extends JFrame implements ActionListener {
     JLabel email =new JLabel("email") ;
     JLabel password =new JLabel("Password");
@@ -11,9 +12,9 @@ public class LoginAdmin extends JFrame implements ActionListener {
     JPasswordField passwordTextField = new JPasswordField();
     JButton loginb = new JButton("login");
     JButton gobackb = new JButton("goback");
-    
 
-    public LoginAdmin (){
+
+    public LoginAdmin () throws SQLException, ClassNotFoundException {
         super("Admin Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,250);
@@ -42,8 +43,8 @@ public class LoginAdmin extends JFrame implements ActionListener {
         gobackb.addActionListener(this);
         add(loginb);
         add(gobackb);
-
         setVisible(true);
+
 
     }
     public void actionPerformed(ActionEvent e){
@@ -56,8 +57,28 @@ public class LoginAdmin extends JFrame implements ActionListener {
                 passwordTextField.setText("");
             }
             else{
-                //tfakid base donnee  ken ey
-                JOptionPane.showMessageDialog(this, "Welcome Admin");
+                try {
+                    Class.forName("org.sqlite.JDBC");
+                    Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT email,password FROM Users where role='Administrator'");
+                    while (rs.next()) {
+                        String email = rs.getString("email");
+                        String password = rs.getString("password");
+                        if(email.equals(emailS) && password.equals(pwdS)){
+                            JOptionPane.showMessageDialog(this, "Welcome Admin");
+                            new AdminCarUser();
+                            dispose();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(this, "Admin doesnt exist");
+                            emailTextField.setText("");
+                            passwordTextField.setText("");
+                        }
+                    }
+                } catch (SQLException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
         else if(e.getSource()==gobackb){

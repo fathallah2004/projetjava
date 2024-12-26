@@ -2,6 +2,7 @@ package Pack ;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class App extends JFrame implements ActionListener {
     JButton adminb = new JButton ("ADMIN") ;
@@ -24,7 +25,11 @@ public class App extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==adminb){
-            new LoginAdmin() ;
+            try {
+                new LoginAdmin() ;
+            } catch (SQLException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         else if(e.getSource()==userb){
             new LoginUser() ;

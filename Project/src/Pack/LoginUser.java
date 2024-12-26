@@ -2,6 +2,7 @@ package Pack ;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import javax.swing.*; 
 public class LoginUser extends JFrame  implements ActionListener {
     JLabel email =new JLabel("email") ;
@@ -50,7 +51,6 @@ public class LoginUser extends JFrame  implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==loginb){
-            System.out.println("login");
             String emailS = emailTextField.getText();
             String pwdS = passwordTextField.getText();
             if((!verifEmail(emailS)) || (!verifPassword(pwdS))){
@@ -59,8 +59,29 @@ public class LoginUser extends JFrame  implements ActionListener {
                 passwordTextField.setText("");
             }
             else{
-                JOptionPane.showMessageDialog(this, "Login successful");
-                dispose();
+                try {
+                    Class.forName("org.sqlite.JDBC");
+                    Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT email,password FROM Users where role='Client'");
+                    boolean enter = false;
+                    while (rs.next() && !enter) {
+                        String email = rs.getString("email");
+                        String password = rs.getString("password");
+                        if(email.equals(emailS) && password.equals(pwdS)){
+                            JOptionPane.showMessageDialog(this, "Welcome User");
+                            enter = true;
+                            dispose();
+                        }
+                    }
+                    if(!enter){
+                        JOptionPane.showMessageDialog(this, "User doesnt exist");
+                        emailTextField.setText("");
+                        passwordTextField.setText("");
+                    }
+                } catch (SQLException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
         else if(e.getSource()==signupb){
@@ -77,7 +98,7 @@ public class LoginUser extends JFrame  implements ActionListener {
         return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
     }
     public boolean verifPassword(String password){
-        return password.length() >= 8;
+        return password.length() >= 6;
     }
 
 }

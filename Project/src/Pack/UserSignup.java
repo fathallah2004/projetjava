@@ -3,14 +3,13 @@ package Pack;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import javax.swing.*;
 
 public class UserSignup extends JFrame implements ActionListener {
     JLabel name = new JLabel("Name");
     JLabel surname = new JLabel("Surname");
-    JLabel nationality = new JLabel("Nationality");
     JLabel country = new JLabel("Country");
-    JLabel address = new JLabel("Address");
     JLabel phone = new JLabel("Phone Number");
     JLabel email = new JLabel("Email");
     JLabel password = new JLabel("Password");
@@ -20,9 +19,7 @@ public class UserSignup extends JFrame implements ActionListener {
 
     JTextField nameField = new JTextField(20);
     JTextField surnameField = new JTextField(20);
-    JTextField nationalityField = new JTextField(20);
     JTextField countryField = new JTextField(20);
-    JTextField addressField = new JTextField(20);
     JTextField phoneField = new JTextField(20);
     JTextField emailField = new JTextField(20);
     JPasswordField passwordField = new JPasswordField(20);
@@ -60,14 +57,6 @@ public class UserSignup extends JFrame implements ActionListener {
         surnameField.setFont(new Font("Arial", Font.PLAIN, 14));
         add(surnameField);
 
-        nationality.setBounds(50, 130, 100, 30);
-        nationality.setFont(new Font("Arial", Font.BOLD, 14));
-        add(nationality);
-
-        nationalityField.setBounds(180, 130, 200, 30);
-        nationalityField.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(nationalityField);
-
         country.setBounds(50, 180, 100, 30);
         country.setFont(new Font("Arial", Font.BOLD, 14));
         add(country);
@@ -75,14 +64,6 @@ public class UserSignup extends JFrame implements ActionListener {
         countryField.setBounds(180, 180, 200, 30);
         countryField.setFont(new Font("Arial", Font.PLAIN, 14));
         add(countryField);
-
-        address.setBounds(50, 230, 100, 30);
-        address.setFont(new Font("Arial", Font.BOLD, 14));
-        add(address);
-
-        addressField.setBounds(180, 230, 200, 30);
-        addressField.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(addressField);
 
         phone.setBounds(50, 280, 120, 30);
         phone.setFont(new Font("Arial", Font.BOLD, 14));
@@ -155,6 +136,13 @@ public class UserSignup extends JFrame implements ActionListener {
             String nameS = nameField.getText();
             String surnameS = surnameField.getText();
             String telS = phoneField.getText();
+            String g="M";
+            if (femaleRadio.isSelected()){
+                g="F";
+            }
+            else {
+                g="M";
+            }
             if(!robotCheckBox.isSelected()){
                 JOptionPane.showMessageDialog(this, "Check the robot box please.");
             }
@@ -162,8 +150,17 @@ public class UserSignup extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Select the gender");
             }
             else if (verifEmail(emailS) && verifPassword(pwdS) && pwdS.equals(verifyPwdS) && !nameS.isEmpty() && !surnameS.isEmpty() && telS.length() == 8) {
+                try {
+                    Class.forName("org.sqlite.JDBC");
+                    Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                    Statement stmt = con.createStatement();
+                    int rs=stmt.executeUpdate("INSERT INTO Users VALUES ('"+pwdS+"','"+emailS+"',countryField.getText(),'"+g+"','Client','"+nameS+"','"+surnameS+"','"+telS+"')");
+                } catch (SQLException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 JOptionPane.showMessageDialog(this, "Sign up successful");
                 dispose();
+                new LoginUser();
             }
             else {
                 JOptionPane.showMessageDialog(this, "Check your informations please.");
