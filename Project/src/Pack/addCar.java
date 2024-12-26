@@ -1,9 +1,11 @@
 package Pack;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class addCar extends JFrame {
+public class addCar extends JFrame implements ActionListener{
     JLabel marque = new JLabel("Marque");
     JLabel model = new JLabel("Model");
     JLabel prix = new JLabel("Prix");
@@ -102,8 +104,14 @@ public class addCar extends JFrame {
         addcar.setBounds(370, 350, 100, 30);
         goback.setBounds(20, 350, 100, 30);
 
+        addcar.addActionListener(this);
+        goback.addActionListener(this); 
+
+
+
         add(addcar);
         add(goback);
+        
         
 
 
@@ -111,7 +119,90 @@ public class addCar extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new UserSignup();
+    public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == addcar) {
+        
+        String marqueS = marqueField.getText();
+        String modelS = modelField.getText();
+        String prixS = prixField.getText();
+        String etatS = etatField.getText();
+        String couleurS = couleurField.getText();
+        String matricule1S = matriculeField1.getText();
+        String matricule2S = matriculeField2.getText();
+
+        
+        if (marqueS.isEmpty() || modelS.isEmpty() || prixS.isEmpty() || etatS.isEmpty() || couleurS.isEmpty() || matricule1S.isEmpty() || matricule2S.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Check your information, please.");
+        } 
+        
+        else if (!verifmarticule(matricule1S, matricule2S)) {
+            matriculeField1.setText("");
+            matriculeField2.setText("");
+            JOptionPane.showMessageDialog(this, "Check matriculation number, please.");
+        } 
+        
+        else if (!isNumber(prixS)) {
+            prixField.setText("");
+            JOptionPane.showMessageDialog(this, "Check your price, please.");
+        } 
+        /*else {
+             Code to add the car (e.g., database operation) should go here
+            try {
+                 Assuming the database part is uncommented and properly configured
+                 Class.forName("org.sqlite.JDBC");
+                 Connection con = DriverManager.getConnection("jdbc:sqlite:.../carRental.db");
+                 Statement stmt = con.createStatement();
+                 int rs = stmt.executeUpdate("INSERT INTO ...");
+
+                JOptionPane.showMessageDialog(this, "Car added successfully.");
+                dispose(); 
+                new LoginUser(); 
+            } catch (Exception ex) {
+                ex.printStackTrace(); 
+            }
+
+            
+            marqueField.setText("");
+            modelField.setText("");
+            prixField.setText("");
+            etatField.setText("");
+            couleurField.setText("");
+            matriculeField1.setText("");
+            matriculeField2.setText("");
+        }*/
+            
     }
+    else if(e.getSource()==goback){
+            new AdminCarUser() ;
+            dispose();
+        }
+            
+}
+
+
+public static boolean isNumber(String input) {
+    try {
+        Double.parseDouble(input);
+        return true;
+    } catch (NumberFormatException e) {
+        return false;
+    }
+}
+
+
+public boolean verifmarticule(String input1, String input2) {
+    int matricule1 = -1;
+    int matricule2 = -1;
+    try {
+        matricule1 = Integer.parseInt(input1);
+        matricule2 = Integer.parseInt(input2);
+    } catch (NumberFormatException ex) {
+        return false; 
+    }
+
+    if (matricule1 < 0 || matricule1 > 400 || matricule2 < 0 || matricule2 >= 10000) {
+        return false; 
+    }
+    return true; 
+}
 }
