@@ -3,6 +3,10 @@ package Pack;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.*;
 
 public class addCar extends JFrame implements ActionListener{
@@ -145,38 +149,30 @@ public class addCar extends JFrame implements ActionListener{
             prixField.setText("");
             JOptionPane.showMessageDialog(this, "Check your price, please.");
         } 
-        /*else {
-             Code to add the car (e.g., database operation) should go here
+        else {
             try {
-                 Assuming the database part is uncommented and properly configured
-                 Class.forName("org.sqlite.JDBC");
-                 Connection con = DriverManager.getConnection("jdbc:sqlite:.../carRental.db");
-                 Statement stmt = con.createStatement();
-                 int rs = stmt.executeUpdate("INSERT INTO ...");
-
+                Class.forName("org.sqlite.JDBC");
+                Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                Statement stmt = con.createStatement();
+                int nb=stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, mat) VALUES ('" + marqueS + "','" + modelS + "','" + prixS + "','" + etatS + "','" + couleurS + "','" + matricule1S + matricule2S +"')");
                 JOptionPane.showMessageDialog(this, "Car added successfully.");
-                dispose(); 
-                new LoginUser(); 
-            } catch (Exception ex) {
-                ex.printStackTrace(); 
+                marqueField.setText("");
+                modelField.setText("");
+                prixField.setText("");
+                etatField.setText("");
+                couleurField.setText("");
+                matriculeField1.setText("");
+                matriculeField2.setText("");
+            } catch (ClassNotFoundException | SQLException ex) {
+                throw new RuntimeException(ex);
             }
-
-            
-            marqueField.setText("");
-            modelField.setText("");
-            prixField.setText("");
-            etatField.setText("");
-            couleurField.setText("");
-            matriculeField1.setText("");
-            matriculeField2.setText("");
-        }*/
+        }
             
     }
     else if(e.getSource()==goback){
             new AdminCarUser() ;
             dispose();
         }
-            
 }
 
 

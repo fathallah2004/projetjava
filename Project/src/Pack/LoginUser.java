@@ -3,7 +3,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import javax.swing.*; 
+import javax.swing.*;
+
+import static Pack.LoginAdmin.verifEmail;
+import static Pack.LoginAdmin.verifPassword;
+
 public class LoginUser extends JFrame  implements ActionListener {
     JLabel email =new JLabel("email") ;
     JLabel password =new JLabel("Password");
@@ -93,12 +97,6 @@ public class LoginUser extends JFrame  implements ActionListener {
             dispose();
         }
 
-    }
-    public boolean verifEmail(String email){
-        return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
-    }
-    public boolean verifPassword(String password){
-        return password.length() >= 6;
     }
 
 }

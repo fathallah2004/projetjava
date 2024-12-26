@@ -86,10 +86,10 @@ public class LoginAdmin extends JFrame implements ActionListener {
             dispose();
         }
     }
-    public boolean verifEmail(String email){
+    public static boolean verifEmail(String email){
         return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
     }
-    public boolean verifPassword(String password){
+    public static boolean verifPassword(String password){
         return password.length() >= 8;
     }
 

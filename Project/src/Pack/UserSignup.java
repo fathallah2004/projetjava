@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 
+import static Pack.LoginAdmin.verifEmail;
+import static Pack.LoginAdmin.verifPassword;
+import static Pack.addCar.isNumber;
+
 public class UserSignup extends JFrame implements ActionListener {
     JLabel name = new JLabel("Name");
     JLabel surname = new JLabel("Surname");
@@ -131,7 +135,7 @@ public class UserSignup extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==signupb){
             String emailS = emailField.getText();
-            String pwdS = password.getText();
+            String pwdS = passwordField.getText();
             String verifyPwdS = verifyPasswordField.getText();
             String nameS = nameField.getText();
             String surnameS = surnameField.getText();
@@ -143,18 +147,22 @@ public class UserSignup extends JFrame implements ActionListener {
             else {
                 g="M";
             }
-            if(!robotCheckBox.isSelected()){
-                JOptionPane.showMessageDialog(this, "Check the robot box please.");
+            if (!verifEmail(emailS) || !verifPassword(pwdS) || !(pwdS.equals(verifyPwdS)) || nameS.isEmpty() || surnameS.isEmpty() || !isNumber(telS) || telS.length() != 8){
+                JOptionPane.showMessageDialog(this, "Check your informations please.");
+                robotCheckBox.setSelected(false);
             }
             else if(!maleRadio.isSelected() && !femaleRadio.isSelected()){
                 JOptionPane.showMessageDialog(this, "Select the gender");
             }
-            else if (verifEmail(emailS) && verifPassword(pwdS) && pwdS.equals(verifyPwdS) && !nameS.isEmpty() && !surnameS.isEmpty() && telS.length() == 8) {
+            else if(!robotCheckBox.isSelected()){
+                JOptionPane.showMessageDialog(this, "Check the robot box please.");
+            }
+            else{
                 try {
                     Class.forName("org.sqlite.JDBC");
                     Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
                     Statement stmt = con.createStatement();
-                    int rs=stmt.executeUpdate("INSERT INTO Users VALUES ('"+pwdS+"','"+emailS+"',countryField.getText(),'"+g+"','Client','"+nameS+"','"+surnameS+"','"+telS+"')");
+                    int rs=stmt.executeUpdate("INSERT INTO Users (name,surname,email,password,phone,country,sex,role) VALUES ('"+nameS+"','"+surnameS+"','"+emailS+"','"+pwdS+"','"+telS+"','Tunisia','"+g+"','Client')");
                 } catch (SQLException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -162,21 +170,11 @@ public class UserSignup extends JFrame implements ActionListener {
                 dispose();
                 new LoginUser();
             }
-            else {
-                JOptionPane.showMessageDialog(this, "Check your informations please.");
-                robotCheckBox.setSelected(false);
-            }
         }
         else if(e.getSource()==gobackb){
             new LoginUser() ;
             dispose();
         }
 
-    }
-    public boolean verifEmail(String email){
-        return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
-    }
-    public boolean verifPassword(String password){
-        return password.length() >= 8;
     }
 }
