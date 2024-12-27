@@ -9,40 +9,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
 
-public class addCar extends JFrame implements ActionListener{
-    JLabel marque = new JLabel("Marque");
+public class addCar extends JFrame implements ActionListener {
+    JLabel brand = new JLabel("Brand");
     JLabel model = new JLabel("Model");
-    JLabel prix = new JLabel("Prix");
-    JLabel etat = new JLabel("Etat");
-    JLabel couleur = new JLabel("Couleur");
-    JLabel matricule = new JLabel("Matricule");
+    JLabel price = new JLabel("Price");
+    JLabel status = new JLabel("Status");
+    JLabel color = new JLabel("Color");
+    JLabel license = new JLabel("License Plate");
+    JLabel age = new JLabel("Age");
     JLabel tunis = new JLabel("تونس");
-    
-    JTextField marqueField = new JTextField(20);
+    JLabel dt = new JLabel("DT");
+    JLabel ans = new JLabel("ANS");
+
+    JTextField brandField = new JTextField(20);
     JTextField modelField = new JTextField(20);
-    JTextField prixField = new JTextField(20);
-    JTextField etatField = new JTextField(20);
-    JTextField couleurField = new JTextField(20);
-    JTextField matriculeField1 = new JTextField(20);
-    JTextField matriculeField2 = new JTextField(20);
-    JButton addcar = new JButton("Add Car");
-    JButton goback = new JButton("goback");
+    JTextField priceField = new JTextField(20);
+    JTextField statusField = new JTextField(20);
+    JTextField colorField = new JTextField(20);
+    JTextField licenseField1 = new JTextField(20);
+    JTextField licenseField2 = new JTextField(20);
+    JTextField ageField = new JTextField(20);
+    JButton addCarButton = new JButton("Add Car");
+    JButton goBackButton = new JButton("Go Back");
 
     public addCar() {
-        super("add Car");
-        setSize(500, 435);
+        super("Add Car");
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(null);
 
-        marque.setBounds(50, 30, 100, 30);
-        marque.setFont(new Font("Arial", Font.BOLD, 14));
-        add(marque);
+        // Adding components
+        brand.setBounds(50, 30, 100, 30);
+        brand.setFont(new Font("Arial", Font.BOLD, 14));
+        add(brand);
 
-        marqueField.setBounds(180, 30, 210, 30);
-        marqueField.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(marqueField);
+        brandField.setBounds(180, 30, 210, 30);
+        brandField.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(brandField);
 
         model.setBounds(50, 80, 100, 30);
         model.setFont(new Font("Arial", Font.BOLD, 14));
@@ -52,145 +57,142 @@ public class addCar extends JFrame implements ActionListener{
         modelField.setFont(new Font("Arial", Font.PLAIN, 14));
         add(modelField);
 
-        prix.setBounds(50, 130, 100, 30);
-        prix.setFont(new Font("Arial", Font.BOLD, 14));
-        add(prix);
+        price.setBounds(50, 130, 100, 30);
+        price.setFont(new Font("Arial", Font.BOLD, 14));
+        add(price);
 
-        prixField.setBounds(180, 130, 210, 30);
-        prixField.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(prixField);
+        priceField.setBounds(180, 130, 180, 30);
+        priceField.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(priceField);
 
-        etat.setBounds(50, 180, 100, 30);
-        etat.setFont(new Font("Arial", Font.BOLD, 14));
-        add(etat);
+        dt.setBounds(370, 130, 20, 30);
+        dt.setFont(new Font("Arial", Font.BOLD, 14));
+        add(dt);
 
-        etatField.setBounds(180, 180, 210, 30);
-        etatField.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(etatField);
 
-        couleur.setBounds(50, 230, 100, 30);
-        couleur.setFont(new Font("Arial", Font.BOLD, 14));
-        add(couleur);
+        status.setBounds(50, 180, 100, 30);
+        status.setFont(new Font("Arial", Font.BOLD, 14));
+        add(status);
 
-        couleurField.setBounds(180, 230, 210, 30);
-        couleurField.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(couleurField);
+        statusField.setBounds(180, 180, 210, 30);
+        statusField.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(statusField);
 
-        matricule.setBounds(50, 280, 120, 30);
-        matricule.setFont(new Font("Arial", Font.BOLD, 14));
-        add(matricule);
+        color.setBounds(50, 230, 100, 30);
+        color.setFont(new Font("Arial", Font.BOLD, 14));
+        add(color);
 
-        matriculeField1.setBounds(180, 280, 80, 30);
-        matriculeField1.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(matriculeField1);
-        
-        tunis.setBounds(270, 280, 60, 30);;
+        colorField.setBounds(180, 230, 210, 30);
+        colorField.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(colorField);
+
+        license.setBounds(50, 280, 120, 30);
+        license.setFont(new Font("Arial", Font.BOLD, 14));
+        add(license);
+
+        licenseField1.setBounds(180, 280, 80, 30);
+        licenseField1.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(licenseField1);
+
+        tunis.setBounds(270, 280, 60, 30);
         tunis.setFont(new Font("Arial", Font.BOLD, 14));
         add(tunis);
 
-        
+        licenseField2.setBounds(310, 280, 80, 30);
+        licenseField2.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(licenseField2);
 
-        matriculeField2.setBounds(310, 280, 80, 30);
-        matriculeField2.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(matriculeField2);
+        age.setBounds(50, 330, 100, 30);
+        age.setFont(new Font("Arial", Font.BOLD, 14));
+        add(age);
 
-       
+        ageField.setBounds(180, 330, 175, 30);
+        ageField.setFont(new Font("Arial", Font.PLAIN, 14));
+        add(ageField);
 
+        ans.setBounds(360, 330, 30, 30);
+        ans.setFont(new Font("Arial", Font.BOLD, 14));
+        add(ans);
 
-        addcar.setBounds(370, 350, 100, 30);
-        goback.setBounds(20, 350, 100, 30);
+        addCarButton.setBounds(370, 400, 100, 30);
+        goBackButton.setBounds(20, 400, 100, 30);
 
-        addcar.addActionListener(this);
-        goback.addActionListener(this); 
+        addCarButton.addActionListener(this);
+        goBackButton.addActionListener(this);
 
-
-
-        add(addcar);
-        add(goback);
-        
-        
-
-
+        add(addCarButton);
+        add(goBackButton);
 
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == addcar) {
-        
-        String marqueS = marqueField.getText();
+    if (e.getSource() == addCarButton) {
+        String brandS = brandField.getText();
         String modelS = modelField.getText();
-        String prixS = prixField.getText();
-        String etatS = etatField.getText();
-        String couleurS = couleurField.getText();
-        String matricule1S = matriculeField1.getText();
-        String matricule2S = matriculeField2.getText();
+        String priceS = priceField.getText();
+        String statusS = statusField.getText();
+        String colorS = colorField.getText();
+        String license1S = licenseField1.getText();
+        String license2S = licenseField2.getText();
+        String ageS = ageField.getText();
 
-        
-        if (marqueS.isEmpty() || modelS.isEmpty() || prixS.isEmpty() || etatS.isEmpty() || couleurS.isEmpty() || matricule1S.isEmpty() || matricule2S.isEmpty()) {
+        if (brandS.isEmpty() || modelS.isEmpty() || priceS.isEmpty() || statusS.isEmpty() || colorS.isEmpty() || license1S.isEmpty() || license2S.isEmpty() || ageS.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Check your information, please.");
-        } 
-        
-        else if (!verifmarticule(matricule1S, matricule2S)) {
-            matriculeField1.setText("");
-            matriculeField2.setText("");
-            JOptionPane.showMessageDialog(this, "Check matriculation number, please.");
-        } 
-        
-        else if (!isNumber(prixS)) {
-            prixField.setText("");
+        } else if (!verifyLicense(license1S, license2S)) {
+            licenseField1.setText("");
+            licenseField2.setText("");
+            JOptionPane.showMessageDialog(this, "Check license plate, please.");
+        } else if (!isNumber(priceS)) {
+            priceField.setText("");
             JOptionPane.showMessageDialog(this, "Check your price, please.");
-        } 
-        else {
+        } else if (!isNumber(ageS)) {
+            ageField.setText("");
+            JOptionPane.showMessageDialog(this, "Check your age, please.");
+        } else {
             try {
                 Class.forName("org.sqlite.JDBC");
-                Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                Connection con = DriverManager.getConnection("jdbc:sqlite:carRental.db");
                 Statement stmt = con.createStatement();
-                int nb=stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, mat) VALUES ('" + marqueS + "','" + modelS + "','" + prixS + "','" + etatS + "','" + couleurS + "','" + matricule1S + matricule2S +"')");
+                int rows = stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, license, age) VALUES ('" 
+                    + brandS + "','" + modelS + "','" + priceS + "','" + statusS + "','" + colorS + "','" + license1S + license2S + "','" + ageS + "')");
                 JOptionPane.showMessageDialog(this, "Car added successfully.");
-                marqueField.setText("");
+                brandField.setText("");
                 modelField.setText("");
-                prixField.setText("");
-                etatField.setText("");
-                couleurField.setText("");
-                matriculeField1.setText("");
-                matriculeField2.setText("");
+                priceField.setText("");
+                statusField.setText("");
+                colorField.setText("");
+                licenseField1.setText("");
+                licenseField2.setText("");
+                ageField.setText("");
             } catch (ClassNotFoundException | SQLException ex) {
                 throw new RuntimeException(ex);
             }
         }
-            
+    } else if (e.getSource() == goBackButton) {
+        new AdminCarUser();
+        dispose();
     }
-    else if(e.getSource()==goback){
-            new AdminCarUser() ;
-            dispose();
+}
+
+    public static boolean isNumber(String inputS) {
+        try {
+            Double.parseDouble(inputS);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-}
-
-
-public static boolean isNumber(String input) {
-    try {
-        Double.parseDouble(input);
-        return true;
-    } catch (NumberFormatException e) {
-        return false;
-    }
-}
-
-
-public boolean verifmarticule(String input1, String input2) {
-    int matricule1 = -1;
-    int matricule2 = -1;
-    try {
-        matricule1 = Integer.parseInt(input1);
-        matricule2 = Integer.parseInt(input2);
-    } catch (NumberFormatException ex) {
-        return false; 
     }
 
-    if (matricule1 < 0 || matricule1 > 400 || matricule2 < 0 || matricule2 >= 10000) {
-        return false; 
+    public boolean verifyLicense(String input1S, String input2S) {
+        int license1S, license2S;
+        try {
+            license1S = Integer.parseInt(input1S);
+            license2S = Integer.parseInt(input2S);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+
+        return license1S >= 0 && license1S <= 400 && license2S >= 0 && license2S < 10000;
     }
-    return true; 
-}
 }

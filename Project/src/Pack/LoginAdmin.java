@@ -2,13 +2,13 @@ package Pack ;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 import java.sql.*;
+import javax.swing.*;
 
 public class LoginAdmin extends JFrame implements ActionListener {
-    JLabel email =new JLabel("email") ;
+    JLabel login =new JLabel("login") ;
     JLabel password =new JLabel("Password");
-    JTextField emailTextField = new JTextField();
+    JTextField loginTextField = new JTextField();
     JPasswordField passwordTextField = new JPasswordField();
     JButton loginb = new JButton("login");
     JButton gobackb = new JButton("goback");
@@ -22,13 +22,13 @@ public class LoginAdmin extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
-        email.setBounds(50, 50, 100, 30);
-        email.setFont(new  Font("Arial", Font.BOLD, 14) );
-        add(email);
+        login.setBounds(50, 50, 100, 30);
+        login.setFont(new  Font("Arial", Font.BOLD, 14) );
+        add(login);
 
-        emailTextField.setBounds(160, 50, 180, 30);
-        emailTextField.setFont(new  Font("Arial", Font.BOLD, 14) );
-        add(emailTextField);
+        loginTextField.setBounds(160, 50, 180, 30);
+        loginTextField.setFont(new  Font("Arial", Font.BOLD, 14) );
+        add(loginTextField);
         
         password.setBounds(50, 100, 100, 30);
         password.setFont(new  Font("Arial", Font.BOLD, 14) );
@@ -49,11 +49,11 @@ public class LoginAdmin extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==loginb){
-            String emailS = emailTextField.getText();
+            String loginS = loginTextField.getText();
             String pwdS = passwordTextField.getText();
-            if((!verifEmail(emailS)) || (!verifPassword(pwdS))){
-                JOptionPane.showMessageDialog(this, "Invalid email or password");
-                emailTextField.setText("");
+            if((!verifEmail(loginS)) || (!verifPassword(pwdS))){
+                JOptionPane.showMessageDialog(this, "Invalid login or password");
+                loginTextField.setText("");
                 passwordTextField.setText("");
             }
             else{
@@ -61,18 +61,18 @@ public class LoginAdmin extends JFrame implements ActionListener {
                     Class.forName("org.sqlite.JDBC");
                     Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
                     Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT email,password FROM Users where role='Administrator'");
+                    ResultSet rs = stmt.executeQuery("SELECT login,password FROM Users where role='Administrator'");
                     while (rs.next()) {
-                        String email = rs.getString("email");
+                        String login = rs.getString("login");
                         String password = rs.getString("password");
-                        if(email.equals(emailS) && password.equals(pwdS)){
+                        if(login.equals(loginS) && password.equals(pwdS)){
                             JOptionPane.showMessageDialog(this, "Welcome Admin");
                             new AdminCarUser();
                             dispose();
                         }
                         else{
                             JOptionPane.showMessageDialog(this, "Admin doesnt exist");
-                            emailTextField.setText("");
+                            loginTextField.setText("");
                             passwordTextField.setText("");
                         }
                     }
@@ -86,8 +86,8 @@ public class LoginAdmin extends JFrame implements ActionListener {
             dispose();
         }
     }
-    public static boolean verifEmail(String email){
-        return !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
+    public static boolean verifEmail(String login){
+        return !login.isEmpty() && login.indexOf('@') != -1 && login.indexOf('.') != -1;
     }
     public static boolean verifPassword(String password){
         return password.length() >= 8;
