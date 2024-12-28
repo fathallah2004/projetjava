@@ -5,8 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 
-import static Pack.verification_functions.verifEmail;
-import static Pack.verification_functions.verifPassword;
+import static Pack.verification_functions.*;
 
 public class LoginAdmin extends JFrame implements ActionListener {
     JLabel login =new JLabel("login") ;
@@ -54,15 +53,15 @@ public class LoginAdmin extends JFrame implements ActionListener {
         if(e.getSource()==loginb){
             String loginS = loginTextField.getText();
             String pwdS = passwordTextField.getText();
-            if((!verifEmail(loginS)) || (!verifPassword(pwdS))){
+            if((!veriflogin(loginS)) || (!verifPassword(pwdS))){
                 JOptionPane.showMessageDialog(this, "Invalid login or password");
                 loginTextField.setText("");
                 passwordTextField.setText("");
+                loginTextField.requestFocus();
             }
             else{
                 try {
-                    Class.forName("org.sqlite.JDBC");
-                    Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                    Connection con = DatabaseConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT login,password FROM Users where role='Administrator'");
                     while (rs.next()) {
@@ -77,9 +76,10 @@ public class LoginAdmin extends JFrame implements ActionListener {
                             JOptionPane.showMessageDialog(this, "Admin doesnt exist");
                             loginTextField.setText("");
                             passwordTextField.setText("");
+                            loginTextField.requestFocus();
                         }
                     }
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }

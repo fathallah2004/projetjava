@@ -62,11 +62,11 @@ public class LoginUser extends JFrame  implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Invalid login or password");
                 loginTextField.setText("");
                 passwordTextField.setText("");
+                loginTextField.requestFocus();
             }
             else{
                 try {
-                    Class.forName("org.sqlite.JDBC");
-                    Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                    Connection con = DatabaseConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT login,password FROM Users where role='Client'");
                     boolean enter = false;
@@ -83,8 +83,9 @@ public class LoginUser extends JFrame  implements ActionListener {
                         JOptionPane.showMessageDialog(this, "User doesnt exist");
                         loginTextField.setText("");
                         passwordTextField.setText("");
+                        loginTextField.requestFocus();
                     }
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }

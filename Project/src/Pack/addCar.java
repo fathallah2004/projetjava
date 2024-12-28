@@ -154,8 +154,7 @@ public class addCar extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Check your age, please.");
         } else {
             try {
-                Class.forName("org.sqlite.JDBC");
-                Connection con = DriverManager.getConnection("jdbc:sqlite:carRental.db");
+                Connection con = DatabaseConnection.getConnection();
                 Statement stmt = con.createStatement();
                 int rows = stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, license, age) VALUES ('" 
                     + brandS + "','" + modelS + "','" + priceS + "','" + statusS + "','" + colorS + "','" + license1S + license2S + "','" + ageS + "')");
@@ -168,7 +167,7 @@ public class addCar extends JFrame implements ActionListener {
                 licenseField1.setText("");
                 licenseField2.setText("");
                 ageField.setText("");
-            } catch (ClassNotFoundException | SQLException ex) {
+            } catch ( SQLException ex) {
                 throw new RuntimeException(ex);
             }
         }

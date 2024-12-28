@@ -2,13 +2,13 @@ package Pack;
 
 public class verification_functions {
     public static boolean verifEmail(String email){
-        return email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$") && !email.isEmpty() && email.indexOf('@') != -1 && email.indexOf('.') != -1;
+        return email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
     }
     public static boolean veriflogin(String login){
-        return  login.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
+        return login.length() > 4 && login.length() < 20 ;
     }
     public static boolean verifPassword(String password){
-        return password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+        return password.length() > 6  && password.length() < 20;
     }
     public static boolean isNumber(String inputS) {
         try {

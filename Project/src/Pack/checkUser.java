@@ -1,105 +1,60 @@
 package Pack;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class checkUser extends JFrame implements ActionListener {
-
-    JLabel name = new JLabel("Name");
-    JLabel surname = new JLabel("Surname");
-    JLabel country = new JLabel("Country");
-    JLabel phone = new JLabel("Phone Number");
-    JLabel email = new JLabel("Email");
-    JLabel login = new JLabel("Login");
-    JLabel gender = new JLabel("Gender");
-
-    JTextField nameField = new JTextField(20);
-    JTextField surnameField = new JTextField(20);
-    JTextField countryField = new JTextField(20);
-    JTextField phoneField = new JTextField(20);
-    JTextField emailField = new JTextField(20);
-    JTextField loginField = new JTextField(20);
-    JRadioButton maleRadio = new JRadioButton("Male");
-    JRadioButton femaleRadio = new JRadioButton("Female");
-    ButtonGroup genderGroup = new ButtonGroup();
-    JButton searchb = new JButton("Search");
-    JButton gobackb = new JButton("Go Back");
+    JButton backButton = new JButton("Go Back");
+    JTable tblData = new JTable();
+    DefaultTableModel model;
 
     public checkUser() {
-        super("Check Users");
-        setSize(500, 500);
+        super("Check User");
+        setSize(1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(null);
 
-        name.setBounds(50, 50, 100, 30);
-        nameField.setBounds(180, 50, 200, 30);
-        add(name);
-        add(nameField);
+        JScrollPane sp = new JScrollPane(tblData);
+        sp.setBounds(50, 50, 1000, 450);
+        add(sp);
 
-        surname.setBounds(50, 100, 100, 30);
-        surnameField.setBounds(180, 100, 200, 30);
-        add(surname);
-        add(surnameField);
+        backButton.setBounds(50, 520, 150, 30);
+        backButton.addActionListener(this);
+        add(backButton);
 
-        country.setBounds(50, 150, 100, 30);
-        countryField.setBounds(180, 150, 200, 30);
-        add(country);
-        add(countryField);
-
-        phone.setBounds(50, 200, 120, 30);
-        phoneField.setBounds(180, 200, 200, 30);
-        add(phone);
-        add(phoneField);
-
-        email.setBounds(50, 250, 100, 30);
-        emailField.setBounds(180, 250, 200, 30);
-        add(email);
-        add(emailField);
-
-        login.setBounds(50, 300, 100, 30);
-        loginField.setBounds(180, 300, 200, 30);
-        add(login);
-        add(loginField);
-
-        gender.setBounds(50, 350, 100, 30);
-        maleRadio.setBounds(180, 350, 80, 30);
-        femaleRadio.setBounds(280, 350, 80, 30);
-        genderGroup.add(maleRadio);
-        genderGroup.add(femaleRadio);
-        add(gender);
-        add(maleRadio);
-        add(femaleRadio);
-
-        searchb.setBounds(370 ,400, 100, 30);
-        gobackb.setBounds(15, 400, 100, 30);
-        add(searchb);
-        add(gobackb);
-
-        searchb.addActionListener(this);
-        gobackb.addActionListener(this);
-
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            model = (DefaultTableModel) tblData.getModel();
+            int cols = rsmd.getColumnCount();
+            String[] colName = new String[cols];
+            for (int i = 1; i <= cols; i++) {
+                colName[i - 1] = rsmd.getColumnName(i);
+            }
+            model.setColumnIdentifiers(colName);
+            while (rs.next()) {
+                Object[] rowData = new Object[cols];
+                for (int i = 1; i <= cols; i++) {
+                    rowData[i - 1] = rs.getObject(i);
+                }
+                model.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == searchb) {
-            String emailS = emailField.getText();
-            String loginS = loginField.getText();
-            String nameS = nameField.getText();
-            String surnameS = surnameField.getText();
-            String telS = phoneField.getText();
-            String g = "M";
-            if (femaleRadio.isSelected()) {
-                g = "F";
-            }
-            // partie base lil inteface il jey ghodwa nchlh
-        } else if (e.getSource() == gobackb) {
-            new LoginUser();
+        if (e.getSource() == backButton) {
+            new AdminCarUser();
             dispose();
         }
     }
