@@ -1,13 +1,13 @@
 package Pack;
 
-import static Pack.LoginAdmin.verifEmail;
-import static Pack.LoginAdmin.verifPassword;
-import static Pack.addCar.isNumber;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
+
+import static Pack.verification_functions.*;
 
 public class UserSignup extends JFrame implements ActionListener {
     // Labels
@@ -159,7 +159,7 @@ public class UserSignup extends JFrame implements ActionListener {
             else {
                 g="M";
             }
-            if (!verifEmail(emailS) || !verifPassword(pwdS) || !(pwdS.equals(verifyPwdS)) || loginS.isEmpty() || nameS.isEmpty() || surnameS.isEmpty() || !isNumber(telS) || telS.length() != 8){
+            if (!verifEmail(emailS) || !verifPassword(pwdS) || !(pwdS.equals(verifyPwdS)) || loginS.isEmpty() || nameS.isEmpty() || surnameS.isEmpty() || !isNumber(telS) || telS.length() != 8 || !veriflogin(loginS)) {
                 JOptionPane.showMessageDialog(this, "Check your informations please.");
                 robotCheckBox.setSelected(false);
             }
@@ -174,8 +174,8 @@ public class UserSignup extends JFrame implements ActionListener {
                     Class.forName("org.sqlite.JDBC");
                     Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
                     Statement stmt = con.createStatement();
-                    int rs=stmt.executeUpdate("INSERT INTO Users (name,surname,email,password,phone,country,sex,role) " +
-                                                "VALUES ('"+nameS+"','"+surnameS+"','"+emailS+"','"+pwdS+"','"+telS+"','Tunisia','"+g+"','Client')");
+                    int rs=stmt.executeUpdate("INSERT INTO Users (login,name,surname,email,password,phone,country,sex,role) " +
+                                                "VALUES ('"+loginS+"',,'"+nameS+"','"+surnameS+"','"+emailS+"','"+pwdS+"','"+telS+"','Tunisia','"+g+"','Client')");
                 } catch (SQLException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }

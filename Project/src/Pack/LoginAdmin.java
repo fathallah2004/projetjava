@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 
+import static Pack.verification_functions.verifEmail;
+import static Pack.verification_functions.verifPassword;
+
 public class LoginAdmin extends JFrame implements ActionListener {
     JLabel login =new JLabel("login") ;
     JLabel password =new JLabel("Password");
@@ -86,11 +89,6 @@ public class LoginAdmin extends JFrame implements ActionListener {
             dispose();
         }
     }
-    public static boolean verifEmail(String login){
-        return !login.isEmpty() && login.indexOf('@') != -1 && login.indexOf('.') != -1;
-    }
-    public static boolean verifPassword(String password){
-        return password.length() >= 8;
-    }
+
 
 }

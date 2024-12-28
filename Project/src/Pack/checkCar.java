@@ -29,11 +29,11 @@ public class checkCar extends JFrame implements ActionListener {
     JTextField licenseField1 = new JTextField(20);
     JTextField licenseField2 = new JTextField(20);
     JTextField ageField = new JTextField(20);
-    JButton checkCarButton = new JButton("check Car");
+    JButton checkCarButton = new JButton("Check Car");
     JButton goBackButton = new JButton("Go Back");
 
     public checkCar() {
-        super("Add Car");
+        super("Check Car");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -127,72 +127,21 @@ public class checkCar extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == checkCarButton) {
-        String brandS = brandField.getText();
-        String modelS = modelField.getText();
-        String priceS = priceField.getText();
-        String statusS = statusField.getText();
-        String colorS = colorField.getText();
-        String license1S = licenseField1.getText();
-        String license2S = licenseField2.getText();
-        String ageS = ageField.getText();
+        if (e.getSource() == checkCarButton) {
+            String brandS = brandField.getText();
+            String modelS = modelField.getText();
+            String priceS = priceField.getText();
+            String statusS = statusField.getText();
+            String colorS = colorField.getText();
+            String license1S = licenseField1.getText();
+            String license2S = licenseField2.getText();
+            String ageS = ageField.getText();
 
-        if (brandS.isEmpty() || modelS.isEmpty() || priceS.isEmpty() || statusS.isEmpty() || colorS.isEmpty() || license1S.isEmpty() || license2S.isEmpty() || ageS.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Check your information, please.");
-        } else if (!verifyLicense(license1S, license2S)) {
-            licenseField1.setText("");
-            licenseField2.setText("");
-            JOptionPane.showMessageDialog(this, "Check license plate, please.");
-        } else if (!isNumber(priceS)) {
-            priceField.setText("");
-            JOptionPane.showMessageDialog(this, "Check your price, please.");
-        } else if (!isNumber(ageS)) {
-            ageField.setText("");
-            JOptionPane.showMessageDialog(this, "Check your age, please.");
-        } else {
-            try {
-                Class.forName("org.sqlite.JDBC");
-                Connection con = DriverManager.getConnection("jdbc:sqlite:carRental.db");
-                Statement stmt = con.createStatement();
-                int rows = stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, license, age) VALUES ('" 
-                    + brandS + "','" + modelS + "','" + priceS + "','" + statusS + "','" + colorS + "','" + license1S + license2S + "','" + ageS + "')");
-                JOptionPane.showMessageDialog(this, "Car added successfully.");
-                brandField.setText("");
-                modelField.setText("");
-                priceField.setText("");
-                statusField.setText("");
-                colorField.setText("");
-                licenseField1.setText("");
-                licenseField2.setText("");
-                ageField.setText("");
-            } catch (ClassNotFoundException | SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    } else if (e.getSource() == goBackButton) {
-        new AdminCarUser();
-        dispose();
-    }
-}
-
-    public static boolean isNumber(String inputS) {
-        try {
-            Double.parseDouble(inputS);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+            // partie base lil inteface il jey ghodwa nchlh
+        } else if (e.getSource() == goBackButton) {
+            new AdminCarUser();
+            dispose();
         }
     }
 
-    public boolean verifyLicense(String input1S, String input2S) {
-        int license1S, license2S;
-        try {
-            license1S = Integer.parseInt(input1S);
-            license2S = Integer.parseInt(input2S);
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-
-        return license1S >= 0 && license1S <= 400 && license2S >= 0 && license2S < 10000;
-    }
 }

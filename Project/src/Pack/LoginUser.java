@@ -1,6 +1,8 @@
 package Pack ;
-import static Pack.LoginAdmin.verifEmail;
-import static Pack.LoginAdmin.verifPassword;
+
+import static Pack.verification_functions.verifEmail;
+import static Pack.verification_functions.verifPassword;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,9 +71,9 @@ public class LoginUser extends JFrame  implements ActionListener {
                     ResultSet rs = stmt.executeQuery("SELECT login,password FROM Users where role='Client'");
                     boolean enter = false;
                     while (rs.next() && !enter) {
-                        String email = rs.getString("login");
+                        String login = rs.getString("login");
                         String password = rs.getString("password");
-                        if(email.equals(loginS) && password.equals(pwdS)){
+                        if(login.equals(loginS) && password.equals(pwdS)){
                             JOptionPane.showMessageDialog(this, "Welcome User");
                             enter = true;
                             dispose();

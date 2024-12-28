@@ -1,7 +1,6 @@
 package Pack;
 
-import static Pack.LoginAdmin.verifEmail;
-import static Pack.addCar.isNumber;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -30,7 +29,7 @@ public class checkUser extends JFrame implements ActionListener {
     JButton gobackb = new JButton("Go Back");
 
     public checkUser() {
-        super("User Sign Up");
+        super("Check Users");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -98,25 +97,7 @@ public class checkUser extends JFrame implements ActionListener {
             if (femaleRadio.isSelected()) {
                 g = "F";
             }
-
-            if (!verifEmail(emailS) || loginS.isEmpty() || nameS.isEmpty() || surnameS.isEmpty() || !isNumber(telS) || telS.length() != 8) {
-                JOptionPane.showMessageDialog(this, "Check your informations please.");
-            } else if (!maleRadio.isSelected() && !femaleRadio.isSelected()) {
-                JOptionPane.showMessageDialog(this, "Select the gender");
-            } else {
-                try {
-                    Class.forName("org.sqlite.JDBC");
-                    Connection con = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
-                    Statement stmt = con.createStatement();
-                    stmt.executeUpdate("INSERT INTO Users (name, surname, email, password, phone, country, sex, role) " +
-                            "VALUES ('" + nameS + "','" + surnameS + "','" + emailS + "','" + telS + "','Tunisia','" + g + "','Client')");
-                } catch (SQLException | ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-                JOptionPane.showMessageDialog(this, "Sign up successful");
-                dispose();
-                new LoginUser();
-            }
+            // partie base lil inteface il jey ghodwa nchlh
         } else if (e.getSource() == gobackb) {
             new LoginUser();
             dispose();

@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
 
+import static Pack.verification_functions.isNumber;
+import static Pack.verification_functions.verifyLicense;
+
 public class addCar extends JFrame implements ActionListener {
     JLabel brand = new JLabel("Brand");
     JLabel model = new JLabel("Model");
@@ -172,27 +175,8 @@ public class addCar extends JFrame implements ActionListener {
     } else if (e.getSource() == goBackButton) {
         new AdminCarUser();
         dispose();
-    }
-}
-
-    public static boolean isNumber(String inputS) {
-        try {
-            Double.parseDouble(inputS);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
         }
     }
 
-    public boolean verifyLicense(String input1S, String input2S) {
-        int license1S, license2S;
-        try {
-            license1S = Integer.parseInt(input1S);
-            license2S = Integer.parseInt(input2S);
-        } catch (NumberFormatException ex) {
-            return false;
-        }
 
-        return license1S >= 0 && license1S <= 400 && license2S >= 0 && license2S < 10000;
-    }
 }
