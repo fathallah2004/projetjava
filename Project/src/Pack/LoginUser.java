@@ -12,7 +12,7 @@ import javax.swing.*;
 public class LoginUser extends JFrame  implements ActionListener {
     JLabel login =new JLabel("login") ;
     JLabel password =new JLabel("Password");
-    JTextField loginTextField = new JTextField();
+    static JTextField loginTextField = new JTextField();
     JPasswordField passwordTextField = new JPasswordField();
     JButton loginb = new JButton("login");
     JButton gobackb = new JButton("goback");

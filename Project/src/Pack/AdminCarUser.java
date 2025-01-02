@@ -35,7 +35,7 @@ public class AdminCarUser extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addcarb) {
-            new addCar(); 
+            new addCar();
         } else if (e.getSource() == userb) {
             new checkUser(); 
         } else if (e.getSource() == checkcarb) {
