@@ -1,10 +1,11 @@
-package Pack;
+package Pack.Admin;
+
+import Pack.DatabaseConnection;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
@@ -156,7 +157,7 @@ public class addCar extends JFrame implements ActionListener {
             try {
                 Connection con = DatabaseConnection.getConnection();
                 Statement stmt = con.createStatement();
-                int rows = stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, license, age) VALUES ('" 
+                int rows = stmt.executeUpdate("INSERT INTO Cars (brand, model, price, status, color, mat, age) VALUES ('"
                     + brandS + "','" + modelS + "','" + priceS + "','" + statusS + "','" + colorS + "','" + license1S + license2S + "','" + ageS + "')");
                 JOptionPane.showMessageDialog(this, "Car added successfully.");
                 brandField.setText("");
@@ -172,7 +173,7 @@ public class addCar extends JFrame implements ActionListener {
             }
         }
     } else if (e.getSource() == goBackButton) {
-        new AdminCarUser();
+        new AdminInterface();
         dispose();
         }
     }

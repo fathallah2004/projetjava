@@ -1,13 +1,16 @@
-package Pack ;
+package Pack.User;
+
+import Pack.Admin.showCars;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class userCheck extends JFrame implements ActionListener {
+public class userInteface extends JFrame implements ActionListener {
     JButton modify = new JButton ("Modify your acount") ;
     JButton car = new JButton ("Find you car") ;
     JButton goBackButton = new JButton("Go Back");
-    public userCheck(){
+    public userInteface(){
         super("user choice");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,300) ;
@@ -28,13 +31,13 @@ public class userCheck extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==modify){
-            new LoginUser() ;
+            new modifyUserData() ;
         }
         else if(e.getSource()==goBackButton){
             new LoginUser() ;
         }
         else if(e.getSource()==car){
-            new LoginUser() ;
+            new showCars() ;
         }
         dispose();
     }

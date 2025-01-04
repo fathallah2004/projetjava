@@ -1,4 +1,7 @@
 package Pack ;
+import Pack.Admin.LoginAdmin;
+import Pack.User.LoginUser;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +27,11 @@ public class App extends JFrame implements ActionListener {
 
     }
     public void actionPerformed(ActionEvent e){
+        /*update cars,rents
+        * set status='avaialc
+        * where cars.mat=rent.car and cars.status="Rented" and rents.returndate>=currentdate
+        *
+        * delete rents*/
         if(e.getSource()==adminb){
             try {
                 new LoginAdmin() ;

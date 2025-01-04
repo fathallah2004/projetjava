@@ -1,5 +1,10 @@
-package Pack;
+package Pack.User;
 
+
+import Pack.DatabaseConnection;
+
+import static Pack.User.LoginUser.loginTextField;
+import static Pack.verification_functions.*;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -7,9 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 
-import static Pack.verification_functions.*;
-
-public class UserSignup extends JFrame implements ActionListener {
+public class modifyUserData extends JFrame implements ActionListener {
     // Labels
     JLabel name = new JLabel("Name");
     JLabel surname = new JLabel("Surname");
@@ -19,8 +22,6 @@ public class UserSignup extends JFrame implements ActionListener {
     JLabel login = new JLabel("Login");
     JLabel password = new JLabel("Password");
     JLabel verifyPassword = new JLabel("Verify Password");
-    JLabel robotCheck = new JLabel("I am not a robot");
-    JLabel gender = new JLabel("Gender");
 
     // Fields
     JTextField nameField = new JTextField(20);
@@ -31,22 +32,18 @@ public class UserSignup extends JFrame implements ActionListener {
     JTextField loginField = new JTextField(20);
     JPasswordField passwordField = new JPasswordField(20);
     JPasswordField verifyPasswordField = new JPasswordField(20);
-    JCheckBox robotCheckBox = new JCheckBox();
-    JRadioButton maleRadio = new JRadioButton("Male");
-    JRadioButton femaleRadio = new JRadioButton("Female");
-    ButtonGroup genderGroup = new ButtonGroup();
-    JButton signupb = new JButton("Sign Up");
+    JButton modify = new JButton("modify");
     JButton gobackb = new JButton("Go Back");
 
-    public UserSignup() {
-        super("User Sign Up");
-        setSize(500, 660);
+    public modifyUserData() {
+        super("modify user information");
+        setSize(500, 580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(null);
 
-        
+
         name.setBounds(50, 30, 100, 30);
         name.setFont(new Font("Arial", Font.BOLD, 14));
         add(name);
@@ -111,40 +108,35 @@ public class UserSignup extends JFrame implements ActionListener {
         verifyPasswordField.setFont(new Font("Arial", Font.PLAIN, 14));
         add(verifyPasswordField);
 
-        gender.setBounds(50, 430, 100, 30);
-        gender.setFont(new Font("Arial", Font.BOLD, 14));
-        add(gender);
-
-        maleRadio.setBounds(160, 430, 80, 30);
-        maleRadio.setFont(new Font("Arial", Font.PLAIN, 14));
-        genderGroup.add(maleRadio);
-        add(maleRadio);
-
-        femaleRadio.setBounds(250, 430, 80, 30);
-        femaleRadio.setFont(new Font("Arial", Font.PLAIN, 14));
-        genderGroup.add(femaleRadio);
-        add(femaleRadio);
-
-        robotCheck.setBounds(50, 480, 200, 30);
-        robotCheck.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(robotCheck);
-
-        robotCheckBox.setBounds(180, 480, 20, 20);
-        add(robotCheckBox);
-
-        signupb.setBounds(320, 530, 100, 30);
-        gobackb.setBounds(80, 530, 100, 30);
-        signupb.addActionListener(this);
+        modify.setBounds(320, 490, 100, 30);
+        gobackb.setBounds(80, 490, 100, 30);
+        modify.addActionListener(this);
         gobackb.addActionListener(this);
 
-        add(signupb);
+        add(modify);
         add(gobackb);
+
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Users where login='"+loginTextField.getText()+"'");
+            while (rs.next()) {
+                nameField.setText(rs.getString("name"));
+                surnameField.setText(rs.getString("surname"));
+                countryField.setText(rs.getString("country"));
+                phoneField.setText(rs.getString("phone"));
+                emailField.setText(rs.getString("email"));
+                loginField.setText(rs.getString("login"));
+            }
+        }catch (SQLException ex) {
+                throw new RuntimeException(ex);
+        }
 
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e){
-        if(e.getSource()==signupb){
+        if(e.getSource()==modify){
             String emailS = emailField.getText();
             String loginS = loginField.getText();
             String pwdS = passwordField.getText();
@@ -152,39 +144,24 @@ public class UserSignup extends JFrame implements ActionListener {
             String nameS = nameField.getText();
             String surnameS = surnameField.getText();
             String telS = phoneField.getText();
-            String g="M";
-            if (femaleRadio.isSelected()){
-                g="F";
-            }
-            else {
-                g="M";
-            }
             if (!verifEmail(emailS) || !verifPassword(pwdS) || !(pwdS.equals(verifyPwdS)) || loginS.isEmpty() || nameS.isEmpty() || surnameS.isEmpty() || !isNumber(telS) || telS.length() != 8 || !veriflogin(loginS)) {
                 JOptionPane.showMessageDialog(this, "Check your informations please.");
-                robotCheckBox.setSelected(false);
-            }
-            else if(!maleRadio.isSelected() && !femaleRadio.isSelected()){
-                JOptionPane.showMessageDialog(this, "Select the gender");
-            }
-            else if(!robotCheckBox.isSelected()){
-                JOptionPane.showMessageDialog(this, "Check the robot box please.");
+
             }
             else{
                 try {
                     Connection con = DatabaseConnection.getConnection();
                     Statement stmt = con.createStatement();
-                    int rs=stmt.executeUpdate("INSERT INTO Users (login,name,surname,email,password,phone,country,sex,role) " +
-                                                "VALUES ('"+loginS+"',,'"+nameS+"','"+surnameS+"','"+emailS+"','"+pwdS+"','"+telS+"','Tunisia','"+g+"','Client')");
+                    int rsd=stmt.executeUpdate("Update Users set name='"+nameS+"',surname='"+surnameS+"',email='"+emailS+"',password='"+pwdS+"',phone='"+telS+"',country='"+countryField.getText()+"',login='"+loginS+"' where login='"+loginTextField.getText()+"'");
                 } catch (SQLException  ex) {
                     throw new RuntimeException(ex);
                 }
-                JOptionPane.showMessageDialog(this, "Sign up successful");
-                dispose();
-                new LoginUser();
+                JOptionPane.showMessageDialog(this, "Modified successful");
+                new userInteface();
             }
         }
         else if(e.getSource()==gobackb){
-            new LoginUser() ;
+            new userInteface() ;
             dispose();
         }
 

@@ -1,13 +1,17 @@
-package Pack;
+package Pack.Admin;
+
+import Pack.DatabaseConnection;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.*;
+
+import static Pack.verification_functions.isNumber;
+import static Pack.verification_functions.verifyLicense;
 
 public class checkCar extends JFrame implements ActionListener {
     JLabel brand = new JLabel("Brand");
@@ -21,14 +25,14 @@ public class checkCar extends JFrame implements ActionListener {
     JLabel dt = new JLabel("DT");
     JLabel ans = new JLabel("ANS");
 
-    JTextField brandField = new JTextField(20);
-    JTextField modelField = new JTextField(20);
-    JTextField priceField = new JTextField(20);
-    JTextField statusField = new JTextField(20);
-    JTextField colorField = new JTextField(20);
-    JTextField licenseField1 = new JTextField(20);
-    JTextField licenseField2 = new JTextField(20);
-    JTextField ageField = new JTextField(20);
+    static JTextField brandField = new JTextField(20);
+    static JTextField modelField = new JTextField(20);
+    static JTextField priceField = new JTextField(20);
+    static JTextField statusField = new JTextField(20);
+    static JTextField colorField = new JTextField(20);
+    static JTextField licenseField1 = new JTextField(20);
+    static JTextField licenseField2 = new JTextField(20);
+    static JTextField ageField = new JTextField(20);
     JButton checkCarButton = new JButton("Check Car");
     JButton goBackButton = new JButton("Go Back");
 
@@ -137,9 +141,24 @@ public class checkCar extends JFrame implements ActionListener {
             String license2S = licenseField2.getText();
             String ageS = ageField.getText();
 
-            // partie base lil inteface il jey ghodwa nchlh
+            if (brandS.isEmpty() || modelS.isEmpty() || priceS.isEmpty() || statusS.isEmpty() || colorS.isEmpty() || license1S.isEmpty() || license2S.isEmpty() || ageS.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Check your information, please.");
+            } else if (!verifyLicense(license1S, license2S)) {
+                licenseField1.setText("");
+                licenseField2.setText("");
+                JOptionPane.showMessageDialog(this, "Check license plate, please.");
+            } else if (!isNumber(priceS)) {
+                priceField.setText("");
+                JOptionPane.showMessageDialog(this, "Check your price, please.");
+            } else if (!isNumber(ageS)) {
+                ageField.setText("");
+                JOptionPane.showMessageDialog(this, "Check your age, please.");
+            } else {
+                new showCars();
+                dispose();
+            }
         } else if (e.getSource() == goBackButton) {
-            new AdminCarUser();
+            new AdminInterface();
             dispose();
         }
     }

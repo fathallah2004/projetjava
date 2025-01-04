@@ -1,4 +1,6 @@
-package Pack;
+package Pack.Admin;
+
+import Pack.DatabaseConnection;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,12 +8,12 @@ import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class checkUser extends JFrame implements ActionListener {
+public class checkUsers extends JFrame implements ActionListener {
     JButton backButton = new JButton("Go Back");
     JTable tblData = new JTable();
     DefaultTableModel model;
 
-    public checkUser() {
+    public checkUsers() {
         super("Check User");
         setSize(1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +56,7 @@ public class checkUser extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
-            new AdminCarUser();
+            new AdminInterface();
             dispose();
         }
     }

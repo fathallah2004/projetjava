@@ -1,15 +1,17 @@
-package Pack;
+package Pack.Admin;
+import Pack.App;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class AdminCarUser extends JFrame implements ActionListener {
+public class AdminInterface extends JFrame implements ActionListener {
     JButton addcarb = new JButton("Add Car");
     JButton userb = new JButton("Check User");
     JButton checkcarb = new JButton("Check Car");
     JButton gobackb = new JButton("Go Back");
 
-    public AdminCarUser() {
+    public AdminInterface() {
         super("Admin Car User Check");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
@@ -37,9 +39,9 @@ public class AdminCarUser extends JFrame implements ActionListener {
         if (e.getSource() == addcarb) {
             new addCar();
         } else if (e.getSource() == userb) {
-            new checkUser(); 
+            new checkUsers();
         } else if (e.getSource() == checkcarb) {
-            new checkCar();  
+            new checkCar();
         } else if (e.getSource() == gobackb) {
             new App();
         }
