@@ -14,7 +14,7 @@ public class DatabaseConnection {
         if (connection == null) {
             try {
                 Class.forName("org.sqlite.JDBC");
-                connection = DriverManager.getConnection("jdbc:sqlite:C:/Users/idris/OneDrive/Documents/GitHub/projetjava/Project/src/sqliteDataBaseDependencies/carRental.db");
+                connection = DriverManager.getConnection("jdbc:sqlite:src/sqliteDataBaseDependencies/carRental.db");
             } catch (ClassNotFoundException | SQLException e) {
                 throw new RuntimeException("Failed to connect to the database", e);
             }
