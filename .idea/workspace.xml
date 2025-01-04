@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bad1e7de-4105-46cb-a75d-e08872434b8a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Project/src/Pack/modifyUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project/src/Pack/userCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/projetjava.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projetjava.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/Pack/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/Pack/DatabaseConnection.java" afterDir="false" />
-    </list>
+    <list default="true" id="bad1e7de-4105-46cb-a75d-e08872434b8a" name="Changes" comment="creation du interface usercheck&#10;and usermodify" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,11 +86,15 @@
       <workItem from="1735332545148" duration="2484000" />
       <workItem from="1735932659351" duration="4768000" />
       <workItem from="1736014902305" duration="450000" />
-      <workItem from="1736018387495" duration="659000" />
+      <workItem from="1736018387495" duration="1008000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="creation du interface usercheck&#10;and usermodify" />
+    <option name="LAST_COMMIT_MESSAGE" value="creation du interface usercheck&#10;and usermodify" />
   </component>
 </project>
