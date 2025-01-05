@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -98,38 +99,42 @@ public class rentCar extends JFrame implements ActionListener {
             dispose();
         }
         else if(e.getSource() == rentbutton){
-            String date = dateField.getText();
+            String date = dateField.getText().trim();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateFormat.setLenient(false);
             try {
                 dateFormat.parse(date);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate date2 = LocalDate.parse(date, formatter);
-                if (date2.isBefore(LocalDate.now())) {
-                    JOptionPane.showMessageDialog(this, "Invalid Date! Please use a date after today.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                else{
-                    int row=tblData.getSelectedRow();
-                    if(row==-1){
-                        JOptionPane.showMessageDialog(this, "Please select a car to rent");
+                try{
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate date2 = LocalDate.parse(date, formatter);
+                    if (date2.isBefore(LocalDate.now())) {
+                        JOptionPane.showMessageDialog(this, "Invalid Date! Please use a date after today.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else{
-                        String carid = tblData.getValueAt(row, 0).toString();
-                        Connection con = DatabaseConnection.getConnection();
-                        try {
-                            String loginS=loginTextField.getText();
-                            LocalDate currentDate = LocalDate.now();
-                            Statement stmt = con.createStatement();
-                            stmt.executeUpdate("UPDATE Cars SET status='Rented' WHERE mat='"+carid+"'");
-                            stmt.executeUpdate("INSERT INTO Rents (loginUser,mat, rentDate,returnDate) VALUES ('"+loginS+"','"+carid+"','"+currentDate+"','"+date+"')");
-                            JOptionPane.showMessageDialog(this, "Car rented successfully");
-                            dispose();
-                            new rentCar();
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
+                        int row=tblData.getSelectedRow();
+                        if(row==-1){
+                            JOptionPane.showMessageDialog(this, "Please select a car to rent");
                         }
-                        dispose();
+                        else{
+                            String carid = tblData.getValueAt(row, 0).toString();
+                            Connection con = DatabaseConnection.getConnection();
+                            try {
+                                String loginS=loginTextField.getText();
+                                LocalDate currentDate = LocalDate.now();
+                                Statement stmt = con.createStatement();
+                                stmt.executeUpdate("UPDATE Cars SET status='Rented' WHERE mat='"+carid+"'");
+                                stmt.executeUpdate("INSERT INTO Rents (loginUser,mat, rentDate,returnDate) VALUES ('"+loginS+"','"+carid+"','"+currentDate+"','"+date+"')");
+                                JOptionPane.showMessageDialog(this, "Car rented successfully");
+                                dispose();
+                                new rentCar();
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
+                            dispose();
+                        }
                     }
+                }catch(DateTimeParseException ex){
+                    JOptionPane.showMessageDialog(this,"Invalid Date! Please use the format YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(this,"Invalid Date! Please use the format YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
