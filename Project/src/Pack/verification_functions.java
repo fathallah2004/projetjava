@@ -1,5 +1,6 @@
 package Pack;
 
+
 public class verification_functions {
     public static boolean verifEmail(String email){
         return email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
@@ -30,4 +31,16 @@ public class verification_functions {
 
         return license1S >= 0 && license1S <= 400 && license2S >= 0 && license2S < 10000;
     }
+
+    public static String replace(String str){
+        if (str.isEmpty()) {
+            str = "%";
+        } else {
+            str = "%" + str + "%";
+        }
+        return str;
+    }
+
 }
+
+

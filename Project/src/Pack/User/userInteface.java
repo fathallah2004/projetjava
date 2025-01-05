@@ -1,7 +1,5 @@
 package Pack.User;
 
-import Pack.Admin.showCars;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -17,6 +15,9 @@ public class userInteface extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(null);
+
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         modify.setBounds(100, 60, 200, 60);
         modify.addActionListener(this);
         car.setBounds(100, 140, 200, 60);
@@ -37,7 +38,7 @@ public class userInteface extends JFrame implements ActionListener {
             new LoginUser() ;
         }
         else if(e.getSource()==car){
-            new showCars() ;
+            new checkCarUser() ;
         }
         dispose();
     }

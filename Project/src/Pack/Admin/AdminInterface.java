@@ -18,6 +18,8 @@ public class AdminInterface extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         addcarb.setBounds(100, 60, 200, 50);
         userb.setBounds(100, 140, 200, 50);
         checkcarb.setBounds(100, 220, 200, 50); 

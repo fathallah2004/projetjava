@@ -1,5 +1,5 @@
-//a change tous
-/*
+package Pack.User;
+
 import Pack.DatabaseConnection;
 
 import java.awt.event.ActionEvent;
@@ -8,8 +8,12 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import static Pack.User.checkCarUser.*;
+import static Pack.verification_functions.replace;
 
 import static Pack.User.LoginUser.loginTextField;
 
@@ -18,17 +22,19 @@ public class rentCar extends JFrame implements ActionListener {
     JButton backButton = new JButton("Go Back");
     JButton rentbutton = new JButton("Rent");
     JTable tblData = new JTable();
-    JLabel label = new JLabel("Enter Date (YYYY-MM-DD): ");
+    JLabel label = new JLabel("Enter Date of return (YYYY-MM-DD): ");
     JTextField dateField = new JTextField(10);
     DefaultTableModel model;
 
-    public () {
-        super("Cars");
+    public rentCar() {
+        super(" Rent a car");
         setSize(1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(null);
+
+        setIconImage(new ImageIcon("src/logo.png").getImage());
 
         JScrollPane sp = new JScrollPane(tblData);
         sp.setBounds(50, 50, 1000, 450);
@@ -40,15 +46,31 @@ public class rentCar extends JFrame implements ActionListener {
         rentbutton.setBounds(900, 520, 150, 30);
         rentbutton.addActionListener(this);
         add(rentbutton);
-        label.setBounds(500, 520, 150, 30);
-        dateField.setBounds(650, 520, 150, 30);
+        label.setBounds(350, 520, 250, 30);
+        dateField.setBounds(600, 520, 150, 30);
         add(label);
         add(dateField);
 
         Connection con = DatabaseConnection.getConnection();
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Cars");
+            String brandS=replace(brandField.getText());
+            String modelS=replace(modelField.getText());
+            String priceS=replace(priceField.getText());
+            String colorS=replace(colorField.getText());
+            String matS=replace(licenseField1.getText()+licenseField2.getText());
+            String ageS=replace(ageField.getText());
+
+            String select="SELECT * FROM Cars where mat LIKE ? and brand LIKE ? and model LIKE ? and price LIKE ? and color LIKE ? and status LIKE 'Available' and age LIKE ?";
+
+            PreparedStatement stmt = con.prepareStatement(select);
+            stmt.setString(1, matS);
+            stmt.setString(2, brandS);
+            stmt.setString(3, modelS);
+            stmt.setString(4, priceS);
+            stmt.setString(5, colorS);
+            stmt.setString(6, ageS);
+
+            ResultSet rs = stmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             model = (DefaultTableModel) tblData.getModel();
             int cols = rsmd.getColumnCount();
@@ -72,7 +94,7 @@ public class rentCar extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
-            new AdminInterface();
+            new checkCarUser();
             dispose();
         }
         else if(e.getSource() == rentbutton){
@@ -81,30 +103,37 @@ public class rentCar extends JFrame implements ActionListener {
             dateFormat.setLenient(false);
             try {
                 dateFormat.parse(date);
-                int row=tblData.getSelectedRow();
-                if(row==-1){
-                    JOptionPane.showMessageDialog(this, "Please select a car to rent");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate date2 = LocalDate.parse(date, formatter);
+                if (date2.isBefore(LocalDate.now())) {
+                    JOptionPane.showMessageDialog(this, "Invalid Date! Please use a date after today.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
-                    String carid = tblData.getValueAt(row, 0).toString();
-                    Connection con = DatabaseConnection.getConnection();
-                    try {
-                        String loginS=loginTextField.getText();
-                        LocalDate currentDate = LocalDate.now();
-                        Statement stmt = con.createStatement();
-                        stmt.executeUpdate("UPDATE Cars SET status='Rented' WHERE mat='"+carid+"'");
-                        stmt.executeUpdate("INSERT INTO Rents (loginUser,mat, rentDate,returnDate) VALUES ('"+loginS+"','"+carid+"','"+currentDate+"','"+date+"')");
-                        JOptionPane.showMessageDialog(this, "Car rented successfully");
-                        dispose();
-                        new showCars();
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
+                    int row=tblData.getSelectedRow();
+                    if(row==-1){
+                        JOptionPane.showMessageDialog(this, "Please select a car to rent");
                     }
-                    dispose();
+                    else{
+                        String carid = tblData.getValueAt(row, 0).toString();
+                        Connection con = DatabaseConnection.getConnection();
+                        try {
+                            String loginS=loginTextField.getText();
+                            LocalDate currentDate = LocalDate.now();
+                            Statement stmt = con.createStatement();
+                            stmt.executeUpdate("UPDATE Cars SET status='Rented' WHERE mat='"+carid+"'");
+                            stmt.executeUpdate("INSERT INTO Rents (loginUser,mat, rentDate,returnDate) VALUES ('"+loginS+"','"+carid+"','"+currentDate+"','"+date+"')");
+                            JOptionPane.showMessageDialog(this, "Car rented successfully");
+                            dispose();
+                            new rentCar();
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        dispose();
+                    }
                 }
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(this,"Invalid Date! Please use the format YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-}*/
+}

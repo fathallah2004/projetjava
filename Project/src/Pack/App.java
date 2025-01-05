@@ -5,7 +5,10 @@ import Pack.User.LoginUser;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 
 public class App extends JFrame implements ActionListener {
     JButton adminb = new JButton ("ADMIN") ;
@@ -17,6 +20,9 @@ public class App extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
         setLayout(null);
+
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         adminb.setBounds(100, 60, 200, 60);
         adminb.addActionListener(this);
         userb.setBounds(100, 140, 200, 60);
@@ -27,11 +33,17 @@ public class App extends JFrame implements ActionListener {
 
     }
     public void actionPerformed(ActionEvent e){
-        /*update cars,rents
-        * set status='avaialc
-        * where cars.mat=rent.car and cars.status="Rented" and rents.returndate>=currentdate
-        *
-        * delete rents*/
+        Connection con = DatabaseConnection.getConnection();
+        try {
+            Statement stmt = con.createStatement();
+            LocalDate currentDate = LocalDate.now();
+            int rs =stmt.executeUpdate("UPDATE cars SET status = 'Available' WHERE mat IN (SELECT mat FROM rents WHERE returnDate <= '"+currentDate+"')");
+            Statement stmt2 = con.createStatement();
+            int rs2 =stmt2.executeUpdate("DELETE FROM rents WHERE returnDate <= '"+currentDate+"'");
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
         if(e.getSource()==adminb){
             try {
                 new LoginAdmin() ;

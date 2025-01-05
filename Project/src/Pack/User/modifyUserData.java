@@ -13,7 +13,6 @@ import java.sql.*;
 import javax.swing.*;
 
 public class modifyUserData extends JFrame implements ActionListener {
-    // Labels
     JLabel name = new JLabel("Name");
     JLabel surname = new JLabel("Surname");
     JLabel country = new JLabel("Country");
@@ -23,7 +22,6 @@ public class modifyUserData extends JFrame implements ActionListener {
     JLabel password = new JLabel("Password");
     JLabel verifyPassword = new JLabel("Verify Password");
 
-    // Fields
     JTextField nameField = new JTextField(20);
     JTextField surnameField = new JTextField(20);
     JTextField countryField = new JTextField(20);
@@ -43,6 +41,7 @@ public class modifyUserData extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
+        setIconImage(new ImageIcon("src/logo.png").getImage());
 
         name.setBounds(50, 30, 100, 30);
         name.setFont(new Font("Arial", Font.BOLD, 14));

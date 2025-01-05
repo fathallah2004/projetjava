@@ -21,6 +21,8 @@ public class checkUsers extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         JScrollPane sp = new JScrollPane(tblData);
         sp.setBounds(50, 50, 1000, 450);
         add(sp);

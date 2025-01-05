@@ -12,7 +12,7 @@ import javax.swing.*;
 import static Pack.verification_functions.*;
 
 public class UserSignup extends JFrame implements ActionListener {
-    // Labels
+
     JLabel name = new JLabel("Name");
     JLabel surname = new JLabel("Surname");
     JLabel country = new JLabel("Country");
@@ -24,7 +24,6 @@ public class UserSignup extends JFrame implements ActionListener {
     JLabel robotCheck = new JLabel("I am not a robot");
     JLabel gender = new JLabel("Gender");
 
-    // Fields
     JTextField nameField = new JTextField(20);
     JTextField surnameField = new JTextField(20);
     JTextField countryField = new JTextField(20);
@@ -48,7 +47,8 @@ public class UserSignup extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
-        
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         name.setBounds(50, 30, 100, 30);
         name.setFont(new Font("Arial", Font.BOLD, 14));
         add(name);

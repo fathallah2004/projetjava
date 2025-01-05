@@ -27,6 +27,8 @@ public class LoginAdmin extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         login.setBounds(50, 50, 100, 30);
         login.setFont(new  Font("Arial", Font.BOLD, 14) );
         add(login);

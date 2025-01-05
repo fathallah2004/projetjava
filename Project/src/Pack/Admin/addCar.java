@@ -44,7 +44,8 @@ public class addCar extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(null);
 
-        // Adding components
+        setIconImage(new ImageIcon("src/logo.png").getImage());
+
         brand.setBounds(50, 30, 100, 30);
         brand.setFont(new Font("Arial", Font.BOLD, 14));
         add(brand);
