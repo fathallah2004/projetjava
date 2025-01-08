@@ -69,20 +69,22 @@ public class LoginAdmin extends JFrame implements ActionListener {
                     Connection con = DatabaseConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT login,password FROM Users where role='Administrator'");
-                    while (rs.next()) {
+                    boolean enter = false;
+                    while (rs.next() && !enter) {
                         String login = rs.getString("login");
                         String password = rs.getString("password");
                         if(login.equals(loginS) && password.equals(pwdS)){
                             JOptionPane.showMessageDialog(this, "Welcome Admin");
+                            enter = true;
                             new AdminInterface();
                             dispose();
                         }
-                        else{
-                            JOptionPane.showMessageDialog(this, "Admin doesnt exist");
-                            loginTextField.setText("");
-                            passwordTextField.setText("");
-                            loginTextField.requestFocus();
-                        }
+                    }
+                    if(!enter){
+                        JOptionPane.showMessageDialog(this, "Admin doesnt exist");
+                        loginTextField.setText("");
+                        passwordTextField.setText("");
+                        loginTextField.requestFocus();
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
