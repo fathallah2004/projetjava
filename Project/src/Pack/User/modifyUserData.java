@@ -156,6 +156,7 @@ public class modifyUserData extends JFrame implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 JOptionPane.showMessageDialog(this, "Modified successful");
+                dispose();
                 new userInteface();
             }
         }
